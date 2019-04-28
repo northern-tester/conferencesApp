@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "80e96cd1-cea6-4e05-b044-233b6846581c",
+		"name": "Conferences App",
+		"description": "Postman Collection for Operability Tutorial\n\nRunning npm run docs will generate documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
+						"exec": [
+							"pm.globals.set(\"email\", pm.response.json().email);",
+							"pm.globals.set(\"password\", request.data.password);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "access_token",
+							"value": "{{master_token}}",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "{{$guid}}@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password{{$randomInt}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82d0449d-b4de-4174-948c-d7247a6efa95",
+						"exec": [
+							"pm.globals.set(\"auth_token\", pm.response.json().token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{email}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "access_token",
+							"value": "{{master_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"auth"
+					]
+				},
+				"description": "Using the credentials generated from the POST Create User, get a token to do subsequent requests"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Conferences",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "access_token",
+							"value": "{{auth_token}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Nordic Testing Days",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "May 2019",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Estonia",
+							"type": "text"
+						},
+						{
+							"key": "length",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "tutorials",
+							"value": "Yes",
+							"type": "text"
+						},
+						{
+							"key": "workshops",
+							"value": "No",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/conferences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"conferences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Speaker",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "access_token",
+							"value": "{{auth_token}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Ash Winter",
+							"type": "text"
+						},
+						{
+							"key": "nationality",
+							"value": "British",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "England",
+							"type": "text"
+						},
+						{
+							"key": "speciality",
+							"value": "Testability, Operability",
+							"type": "text"
+						},
+						{
+							"key": "biography",
+							"value": "I'm a continuously learning tester with a penchant for getting involved in all aspects of developing people and products. I used to be a fully-fledged consultant with The Test People, veteran of various engagements encompassing testing, performance engineering and automation. Moved to the startup world, heavily involved in mobile product development, from the ground up. Now I have struck out on my own, into the wider world of consulting. I'll also speak, coach and contribute to the local tech community in Leeds.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/speakers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"speakers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Session",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "access_token",
+							"value": "{{auth_token}}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Improving Your Testing Through Operability",
+							"type": "text"
+						},
+						{
+							"key": "keywords",
+							"value": "Testing, Operability",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Reliability, handling failure gracefully and recovering quickly are becoming increasingly important as the software development world adopts DevOps culture and practices. Outages and security failures are big news and many companies are investing heavily to avoid these challenges. Operable systems are easy to deploy and test, provide actionable information about their state and behave more predictably in adverse conditions.",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "tutorial",
+							"type": "text"
+						},
+						{
+							"key": "day",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "conference",
+							"value": "Nordic Testing Days 2019",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/sessions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bce743ec-8361-4f9c-bbc4-7578a088d6a7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "22b17427-1ae6-4044-98b8-a68f215545cd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0472204d-a72a-4018-a7eb-49fcc4d8ca76",
+			"key": "master_token",
+			"value": "U7n4qGNgRi2r07E5GSavjJ3MA7dqGLZj",
+			"type": "string"
+		}
+	]
+}
