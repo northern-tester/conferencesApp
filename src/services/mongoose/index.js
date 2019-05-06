@@ -13,8 +13,8 @@ mongoose.Promise = Promise;
 
 /* istanbul ignore next */
 mongoose.Types.ObjectId.prototype.view = function () {
-  return {id: this.toString()}
-};
+  return { id: this.toString() }
+}
 
 mongoose.connection.on('error', (err) => {
   console.error('MongoDBConnectionError: ' + err);

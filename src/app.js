@@ -1,5 +1,5 @@
 import http from 'http'
-import {env, mongo, port, ip, apiRoot} from './config'
+import { env, mongo, port, ip, apiRoot } from './config'
 import mongoose from './services/mongoose'
 import express from './services/express'
 import api from './api'
