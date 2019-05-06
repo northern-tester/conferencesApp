@@ -1,7 +1,8 @@
-import { success, notFound } from '../../services/response/'
-import { User } from '.'
+import {success, notFound} from '../../services/response/'
+import {User} from '.'
 
-export const index = ({ querymen: { query, select, cursor } }, res, next) =>
+
+export const index = ({querymen: {query, select, cursor}}, res, next) =>
   User.count(query)
     .then(count => User.find(query, select, cursor)
       .then(users => ({
@@ -12,17 +13,17 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const show = ({ params }, res, next) =>
+export const show = ({params}, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.view() : null)
     .then(success(res))
     .catch(next)
 
-export const showMe = ({ user }, res) =>
+export const showMe = ({user}, res) =>
   res.json(user.view(true))
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({bodymen: {body}}, res, next) =>
   User.create(body)
     .then((user) => user.view(true))
     .then(success(res, 201))
@@ -39,7 +40,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
       }
     })
 
-export const update = ({ bodymen: { body }, params, user }, res, next) =>
+export const update = ({bodymen: {body}, params, user}, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
     .then((result) => {
@@ -60,7 +61,7 @@ export const update = ({ bodymen: { body }, params, user }, res, next) =>
     .then(success(res))
     .catch(next)
 
-export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =>
+export const updatePassword = ({bodymen: {body}, params, user}, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)
     .then(notFound(res))
     .then((result) => {
@@ -76,12 +77,12 @@ export const updatePassword = ({ bodymen: { body }, params, user }, res, next) =
       }
       return result
     })
-    .then((user) => user ? user.set({ password: body.password }).save() : null)
+    .then((user) => user ? user.set({password: body.password}).save() : null)
     .then((user) => user ? user.view(true) : null)
     .then(success(res))
     .catch(next)
 
-export const destroy = ({ params }, res, next) =>
+export const destroy = ({params}, res, next) =>
   User.findById(params.id)
     .then(notFound(res))
     .then((user) => user ? user.remove() : null)
