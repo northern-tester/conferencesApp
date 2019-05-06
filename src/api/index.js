@@ -5,8 +5,9 @@ import conference from './conference'
 import speaker from './speaker'
 import session from './session'
 import metrics from './metrics'
+import state from './state'
 
-const router = new Router()
+const router = new Router();
 
 /**
  * @apiDefine master Master access only
@@ -31,11 +32,12 @@ const router = new Router()
  * @apiParam {String[]} [sort=-createdAt] Order of returned items.
  * @apiParam {String[]} [fields] Fields to be returned.
  */
-router.use('/users', user)
-router.use('/auth', auth)
-router.use('/conferences', conference)
-router.use('/speakers', speaker)
-router.use('/sessions', session)
-router.use('/metrics', metrics)
+router.use('/users', user);
+router.use('/auth', auth);;
+router.use('/conferences', conference);
+router.use('/speakers', speaker);
+router.use('/sessions', session);
+router.use('/metrics', metrics);
+router.use('/state', state);
 
 export default router

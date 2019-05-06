@@ -9,3 +9,12 @@ groups:
     annotations:
       summary: "Instance {{$labels.instance}} down"
       description: "{{$labels.instance}} of job {{$labels.job}} has been down for more than 1 minute."
+  - alert: 404 Status Codes
+    expr: count({code="404"}) > 0
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "404 status codes"
+      description: "job {{$labels.job}} has returned 404 errors."
+

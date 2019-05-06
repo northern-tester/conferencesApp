@@ -12,4 +12,3 @@ cassettes
 data
 src/services/express/logs
 src/services/mongoose/logs
-data
