@@ -9,5 +9,4 @@ npm-debug.log
 .nyc_output
 coverage
 cassettes
-services
 src/services/express/logs
