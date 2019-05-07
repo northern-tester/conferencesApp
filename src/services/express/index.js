@@ -33,7 +33,7 @@ export default (apiRoot, routes) => {
   }));
 
   app.use(morgan(function (tokens, req, res) {
-    return `{ '${eventLookup.setEventName(req.originalUrl, req.method)}' : 'timestamp': '${new Date().toISOString()}', 'id': '${generateSafeId()}', 'url' : '${req.originalUrl}', 'status' : '${res.statusCode}', 'method' : '${req.method} }`;
+    return `{ '${eventLookup.setEventName(req.originalUrl, req.method, res.statusCode)}' : 'timestamp': '${new Date().toISOString()}', 'id': '${generateSafeId()}', 'url' : '${req.originalUrl}', 'status' : '${res.statusCode}', 'method' : '${req.method} }`;
   }, {stream: accessLogStream}));
 
   app.use(bodyParser.urlencoded({extended: false}))
