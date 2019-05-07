@@ -41,7 +41,7 @@ const config = {
     mongo: {
       uri: 'mongodb://localhost/conferences-app-dev',
       options: {
-        debug: false
+        debug: true
       }
     }
   },

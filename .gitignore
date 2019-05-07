@@ -10,3 +10,4 @@ npm-debug.log
 coverage
 cassettes
 src/services/express/logs
+src/services/mongoose/logs
