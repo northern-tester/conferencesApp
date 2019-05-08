@@ -7,12 +7,15 @@ import api from './api'
 const app = express(apiRoot, api)
 const server = http.createServer(app)
 
-mongoose.connect(mongo.uri)
-mongoose.Promise = Promise
+mongoose.connect(mongo.uri, {useNewUrlParser: true}, function () {
+  console.info(`MongoDBConnectionSuccess: connected to ${mongo.uri}`)
+});
+
+mongoose.Promise = Promise;
 
 setImmediate(() => {
   server.listen(port, ip, () => {
-    console.log('Express server listening on http://%s:%d, in %s mode', ip, port, env)
+    console.log('ExpressApplicationStartedSuccess: Express server listening on http://%s:%d, in %s mode', ip, port, env)
   })
 })
 
