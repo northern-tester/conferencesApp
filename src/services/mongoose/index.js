@@ -24,29 +24,31 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose.set('debug', function (coll, method, query, doc) {
-  let set =
+  let mongoEvent =
     {
-      dbQuery: {
-        timeStamp: new Date().toISOString(),
-        id: generateSafeId(),
-        coll: coll,
-        method: method,
-        query: query,
-        doc: doc
-      }
+      timeStamp: new Date().toISOString(),
+      id: generateSafeId(),
+      coll: coll,
+      method: method,
+      query: query,
+      doc: doc
     };
 
-  let mongoLogStream = rfs('mongo.log', {
-    interval: '1d',
-    path: logDirectory,
+let mongoLogStream = rfs('mongo.log', {
+  interval: '1d',
+  path: logDirectory,
 
-  });
+});
 
-  mongoLogStream.on("error", (err) => {
-    console.log("RFS error", err);
-  });
+console.info({
+  mongoEvent: mongoEvent
+});
 
-  mongoLogStream.write(JSON.stringify(set));
+mongoLogStream.on("error", (err) => {
+  console.log("RFS error", err);
+});
+
+mongoLogStream.write(JSON.stringify(mongoEvent));
 
 });
 
