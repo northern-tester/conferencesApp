@@ -29,7 +29,7 @@ const { name, date, country, length, tutorials, workshops } = schema.tree
 router.post('/',
   token({ required: true }),
   body({ name, date, country, length, tutorials, workshops }),
-  create)
+  create);
 
 /**
  * @api {get} /conferences Retrieve conferences

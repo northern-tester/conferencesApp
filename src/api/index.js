@@ -4,6 +4,7 @@ import auth from './auth'
 import conference from './conference'
 import speaker from './speaker'
 import session from './session'
+import metrics from './metrics'
 
 const router = new Router()
 
@@ -35,5 +36,6 @@ router.use('/auth', auth)
 router.use('/conferences', conference)
 router.use('/speakers', speaker)
 router.use('/sessions', session)
+router.use('/metrics', metrics)
 
 export default router
