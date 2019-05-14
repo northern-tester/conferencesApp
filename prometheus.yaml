@@ -6,10 +6,10 @@ alerting:
   alertmanagers:
     - static_configs:
       - targets:
-        #- 'alertmanager:9093'
+        - 'alertmanager:9093'
 
 rule_files:
-   #- 'conferences.rules.yaml'
+   - 'conferences.rules.yaml'
 
 scrape_configs:
   - job_name: 'prometheus'
