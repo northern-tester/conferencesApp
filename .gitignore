@@ -9,5 +9,6 @@ npm-debug.log
 .nyc_output
 coverage
 cassettes
+data
 src/services/express/logs
 src/services/mongoose/logs
