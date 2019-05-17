@@ -5,17 +5,17 @@ const Prometheus = require('prom-client');
 
 const router = new Router();
 
-const intervalCollector = Prometheus.collectDefaultMetrics({prefix: 'conferences_', timeout: 5000, register});
+const intervalCollector = Prometheus.collectDefaultMetrics({prefix: 'metrics_', timeout: 5000, register});
 
 const histogram = new Prometheus.Histogram({
-  name: 'conferences_metrics_http_duration',
+  name: 'metrics_http_duration',
   help: 'Duration of HTTP requests in ms',
   labelNames: ['method', 'status_code'],
   buckets: [500, 1000]
 });
 
 const counter = new Prometheus.Counter({
-  name: 'conferences_metrics_http_throughput',
+  name: 'metrics_http_throughput',
   help: 'Number of http requests on the metrics endpoint',
 });
 
