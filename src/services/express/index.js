@@ -13,6 +13,7 @@ export default (apiRoot, routes) => {
   const app = express();
   const json = require('morgan-json');
   const eventLookup = require('./eventLookup');
+  const apiMetrics = require('prometheus-api-metrics');
 
   /* istanbul ignore next */
   if (env === 'production' || env === 'development') {
@@ -33,6 +34,13 @@ export default (apiRoot, routes) => {
     response: ':res[content-length]',
     'response-time': ':response-time ms'
   });
+
+  app.use(apiMetrics({
+    metricsPrefix: 'api_metrics',
+    durationBuckets: [0.001, 0.005, 0.015, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5],
+    requestSizeBuckets: [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000],
+    responseSizeBuckets: [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
+  }));
 
   app.use(morgan(format));
 
