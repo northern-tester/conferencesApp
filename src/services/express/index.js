@@ -30,7 +30,7 @@ export default (apiRoot, routes) => {
 
   const format = json({
     summary: '[:date[clf]] :id :eventName :method :url :status',
-    content: ':res[content-length]',
+    response: ':res[content-length]',
     'response-time': ':response-time ms'
   });
 
