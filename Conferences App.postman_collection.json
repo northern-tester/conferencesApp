@@ -7,302 +7,787 @@
 	},
 	"item": [
 		{
-			"name": "Create User",
-			"event": [
+			"name": "Conferences Endpoint",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
-						"exec": [
-							"pm.globals.set(\"email\", pm.response.json().email);",
-							"pm.globals.set(\"password\", request.data.password);"
+					"name": "Create Conferences",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9814193c-5129-4e40-9a99-05318a2f8881",
+								"exec": [
+									"pm.globals.set(\"conferenceId\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Nordic Testing Days",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "May 2019",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "Estonia",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "tutorials",
+									"value": "Yes",
+									"type": "text"
+								},
+								{
+									"key": "workshops",
+									"value": "No",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/conferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"conferences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve All Conferences",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/conferences",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"conferences"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Conference By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/conferences/{{conferenceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"conferences",
+								"{{conferenceId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Conference By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/conferences/{{conferenceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"conferences",
+								"{{conferenceId}}"
+							]
+						},
+						"description": "Delete Conference By Id, where the Id deleted is the last one created. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Conference by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9814193c-5129-4e40-9a99-05318a2f8881",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "TestBash",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "May 2019",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "England",
+									"type": "text"
+								},
+								{
+									"key": "length",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "tutorials",
+									"value": "Yes",
+									"type": "text"
+								},
+								{
+									"key": "workshops",
+									"value": "No",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/conferences/{{conferenceId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"conferences",
+								"{{conferenceId}}"
+							]
+						},
+						"description": "Update name, date, country, length, tutorials and workshops fields on a conference.\n\nThe Id is the latest created conference"
+					},
+					"response": []
 				}
-			],
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
+								"exec": [
+									"pm.globals.set(\"email\", pm.response.json().email);",
+									"pm.globals.set(\"password\", request.data.password);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{master_token}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{$guid}}@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password{{$randomInt}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82d0449d-b4de-4174-948c-d7247a6efa95",
+								"exec": [
+									"pm.globals.set(\"auth_token\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{email}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{master_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"auth"
+							]
+						},
+						"description": "Using the credentials generated from the POST Create User, get a token to do subsequent requests"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User from Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/users/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users As Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{admin_auth_token}}",
+									"type": "text"
+								},
+								{
+									"key": "q",
+									"value": "@example.com",
+									"type": "text"
+								},
+								{
+									"key": "page",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a1de77d-10cb-4b0a-b292-354568e8a4d1",
+								"exec": [
+									"pm.globals.set(\"admin_email\", pm.response.json().email);",
+									"pm.globals.set(\"admin_password\", request.data.password);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{master_token}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{$guid}}@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password{{$randomInt}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Michelle Obama",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82d0449d-b4de-4174-948c-d7247a6efa95",
+								"exec": [
+									"pm.globals.set(\"admin_auth_token\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{admin_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{admin_email}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{master_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Speakers Endpoint",
+			"item": [
+				{
+					"name": "Create Speaker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Ash Winter",
+									"type": "text"
+								},
+								{
+									"key": "nationality",
+									"value": "British",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "England",
+									"type": "text"
+								},
+								{
+									"key": "speciality",
+									"value": "Testability, Operability",
+									"type": "text"
+								},
+								{
+									"key": "biography",
+									"value": "I'm a continuously learning tester with a penchant for getting involved in all aspects of developing people and products. I used to be a fully-fledged consultant with The Test People, veteran of various engagements encompassing testing, performance engineering and automation. Moved to the startup world, heavily involved in mobile product development, from the ground up. Now I have struck out on my own, into the wider world of consulting. I'll also speak, coach and contribute to the local tech community in Leeds.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/speakers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"speakers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions Endpoint",
+			"item": [
+				{
+					"name": "Create Session",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "access_token",
+									"value": "{{auth_token}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Improving Your Testing Through Operability",
+									"type": "text"
+								},
+								{
+									"key": "keywords",
+									"value": "Testing, Operability",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Reliability, handling failure gracefully and recovering quickly are becoming increasingly important as the software development world adopts DevOps culture and practices. Outages and security failures are big news and many companies are investing heavily to avoid these challenges. Operable systems are easy to deploy and test, provide actionable information about their state and behave more predictably in adverse conditions.",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "tutorial",
+									"type": "text"
+								},
+								{
+									"key": "day",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "conference",
+									"value": "Nordic Testing Days 2019",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Metrics Endpoint",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "access_token",
-							"value": "{{master_token}}",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "{{$guid}}@example.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "password{{$randomInt}}",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9000/users",
+					"raw": "http://localhost:9000/metrics",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "9000",
 					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Authenticate User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "82d0449d-b4de-4174-948c-d7247a6efa95",
-						"exec": [
-							"pm.globals.set(\"auth_token\", pm.response.json().token);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "{{email}}",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "access_token",
-							"value": "{{master_token}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:9000/auth",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9000",
-					"path": [
-						"auth"
-					]
-				},
-				"description": "Using the credentials generated from the POST Create User, get a token to do subsequent requests"
-			},
-			"response": []
-		},
-		{
-			"name": "Create Conferences",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "access_token",
-							"value": "{{auth_token}}",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "Nordic Testing Days",
-							"type": "text"
-						},
-						{
-							"key": "date",
-							"value": "May 2019",
-							"type": "text"
-						},
-						{
-							"key": "country",
-							"value": "Estonia",
-							"type": "text"
-						},
-						{
-							"key": "length",
-							"value": "3",
-							"type": "text"
-						},
-						{
-							"key": "tutorials",
-							"value": "Yes",
-							"type": "text"
-						},
-						{
-							"key": "workshops",
-							"value": "No",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:9000/conferences",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9000",
-					"path": [
-						"conferences"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Speaker",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "access_token",
-							"value": "{{auth_token}}",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "Ash Winter",
-							"type": "text"
-						},
-						{
-							"key": "nationality",
-							"value": "British",
-							"type": "text"
-						},
-						{
-							"key": "country",
-							"value": "England",
-							"type": "text"
-						},
-						{
-							"key": "speciality",
-							"value": "Testability, Operability",
-							"type": "text"
-						},
-						{
-							"key": "biography",
-							"value": "I'm a continuously learning tester with a penchant for getting involved in all aspects of developing people and products. I used to be a fully-fledged consultant with The Test People, veteran of various engagements encompassing testing, performance engineering and automation. Moved to the startup world, heavily involved in mobile product development, from the ground up. Now I have struck out on my own, into the wider world of consulting. I'll also speak, coach and contribute to the local tech community in Leeds.",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:9000/speakers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9000",
-					"path": [
-						"speakers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Session",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "access_token",
-							"value": "{{auth_token}}",
-							"type": "text"
-						},
-						{
-							"key": "title",
-							"value": "Improving Your Testing Through Operability",
-							"type": "text"
-						},
-						{
-							"key": "keywords",
-							"value": "Testing, Operability",
-							"type": "text"
-						},
-						{
-							"key": "description",
-							"value": "Reliability, handling failure gracefully and recovering quickly are becoming increasingly important as the software development world adopts DevOps culture and practices. Outages and security failures are big news and many companies are investing heavily to avoid these challenges. Operable systems are easy to deploy and test, provide actionable information about their state and behave more predictably in adverse conditions.",
-							"type": "text"
-						},
-						{
-							"key": "type",
-							"value": "tutorial",
-							"type": "text"
-						},
-						{
-							"key": "day",
-							"value": "1",
-							"type": "text"
-						},
-						{
-							"key": "conference",
-							"value": "Nordic Testing Days 2019",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:9000/sessions",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9000",
-					"path": [
-						"sessions"
+						"metrics"
 					]
 				}
 			},
@@ -333,7 +818,7 @@
 	],
 	"variable": [
 		{
-			"id": "0472204d-a72a-4018-a7eb-49fcc4d8ca76",
+			"id": "89511d5d-eccb-44ad-9208-fcfe1071181a",
 			"key": "master_token",
 			"value": "U7n4qGNgRi2r07E5GSavjJ3MA7dqGLZj",
 			"type": "string"
