@@ -2,7 +2,7 @@ import { success, notFound } from '../../services/response/'
 import { User } from '.'
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  User.count(query)
+  User.countDocuments(query)
     .then(count => User.find(query, select, cursor)
       .then(users => ({
         rows: users.map((user) => user.view()),
