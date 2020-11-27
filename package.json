@@ -57,6 +57,7 @@
     "compression": "^1.7.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "express-rate-limit": "^5.2.3",
     "generate-safe-id": "^1.0.3",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^5.1.0",
