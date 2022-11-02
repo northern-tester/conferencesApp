@@ -28,13 +28,6 @@ const config = {
     apiRoot: process.env.API_ROOT || '',
     masterKey: requireProcessEnv('MASTER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
-    // mongo: {
-    //   options: {
-    //     db: {
-    //       safe: true
-    //     }
-    //   }
-    // }
   },
   test: {},
   development: {
