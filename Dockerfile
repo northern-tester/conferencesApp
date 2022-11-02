@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy files to install
 ADD ./src/ /app/src/
-ADD ./data/ /app/data/
+# ADD ./data/ /app/data/
 ADD ./docs/ /app/docs/
 ADD ./test/ /app/test/
 ADD ./.env /app
@@ -18,7 +18,7 @@ ADD ./package-lock.json /app
 
 #Install node modules
 RUN cd /app && \
-    npm install
+    npm install --legacy-peer-deps
 
 # Expose ports
 EXPOSE 9000

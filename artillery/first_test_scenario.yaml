@@ -1,0 +1,49 @@
+# This example shows some of the advanced features of
+# HTTP testing with Artillery:
+#
+# * Templating inside scenarios with "{{ }}"
+# * Randomizing requests with variables
+# * Using plug-ins (the built-in metrics-by-endpoint plugin)
+# * Request chaining with the capture keyword
+# * POST requests
+#
+# Artillery can do a lot more! Check out the docs at:
+#
+# https: //docs.art/guides/guides/http-reference
+
+config:
+  target: "http://lab.artillery.io"
+  variables:
+    # This value will be used to pick a random movie
+    # from the list returned by the API
+    randomMovie: "{{ $randomNumber(0,149) }}"
+  plugins:
+    metrics-by-endpoint: {}
+scenarios:
+  - flow:
+    - post:
+        url: "/login"
+        json:
+          username: "testuser"
+          password: "testpassword"
+
+    - get:
+        url: "/movies"
+        capture:
+          # Capture id and title of the randomly picked movie,
+          # they are going to be used in subsequent requests
+          - json: "$[{{ randomMovie }}].id"
+            as: "id"
+          - json: "$[{{ randomMovie }}].title"
+            as: "title"
+
+    - log: "movie id: {{id}}, title: {{ title }}"
+
+    - get:
+        url: "/movies/{{ id }}"
+        capture:
+          json: "$.title"
+          as: "singleMovieTitle"
+
+    - delete:
+        url: "/logout"
