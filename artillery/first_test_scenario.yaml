@@ -1,49 +1,68 @@
-# This example shows some of the advanced features of
-# HTTP testing with Artillery:
-#
-# * Templating inside scenarios with "{{ }}"
-# * Randomizing requests with variables
-# * Using plug-ins (the built-in metrics-by-endpoint plugin)
-# * Request chaining with the capture keyword
-# * POST requests
+# Example artillery test for the conference app API
+# Run with `artillery run --dotenv ../.env first_test_scenario.yaml`
 #
 # Artillery can do a lot more! Check out the docs at:
 #
 # https: //docs.art/guides/guides/http-reference
 
 config:
-  target: "http://lab.artillery.io"
+  target: "http://localhost:9000"
+  phases:
+    - duration: 5
+      arrivalRate: 1
+      name: Warm up
+    - duration: 10
+      arrivalRate: 2
+      rampTo: 4
+      name: Ramp up load
+    - duration: 30
+      arrivalRate: 4
+      name: Sustained load
   variables:
-    # This value will be used to pick a random movie
-    # from the list returned by the API
-    randomMovie: "{{ $randomNumber(0,149) }}"
-  plugins:
-    metrics-by-endpoint: {}
-scenarios:
-  - flow:
+    # Generate some credentials
+    email: "{{ $randomString() }}@email.com"
+    password: "password{{ $randomNumber(10000,99999) }}"
+    master-key: "{{ $processEnvironment.MASTER_KEY }}"
+
+before:
+  flow:
+    - log: "Create a new user for authentication tests"
     - post:
-        url: "/login"
-        json:
-          username: "testuser"
-          password: "testpassword"
+        url: "/users"
+        form:
+          access_token: "{{ master-key }}"
+          email: "{{ email }}"
+          password: "{{ password }}"
 
-    - get:
-        url: "/movies"
-        capture:
-          # Capture id and title of the randomly picked movie,
-          # they are going to be used in subsequent requests
-          - json: "$[{{ randomMovie }}].id"
-            as: "id"
-          - json: "$[{{ randomMovie }}].title"
-            as: "title"
+scenarios:
+  - name: "Authenticate a new user successfully"
+    weight: 98
+    flow:
+      - log: "Authenticate the new user {{ email }}"
+      - post:
+          url: "/auth"
+          auth:
+            user: "{{ email }}"
+            pass: "{{ password }}"
+          form:
+            access_token: "{{ master-key }}"
+          capture:
+            # Capture the token for future use
+            - json: "$.token"
+              as: "token"
+          expect:
+            - statusCode: 201
 
-    - log: "movie id: {{id}}, title: {{ title }}"
-
-    - get:
-        url: "/movies/{{ id }}"
-        capture:
-          json: "$.title"
-          as: "singleMovieTitle"
-
-    - delete:
-        url: "/logout"
+  - name: "Failed authentication via incorrect password for the new user"
+    weight: 2
+    flow: 
+      - log: "Provide an invalid password {{ email }}"
+      - post:
+          url: "/auth"
+          auth:
+            user: "{{ email }}"
+            pass: "password123"
+          form:
+            access_token: "{{ master-key }}"
+          expect:
+            - statusCode: 401
