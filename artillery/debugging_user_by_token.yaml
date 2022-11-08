@@ -1,5 +1,5 @@
 # Example artillery test for the conference app API
-# Run with `artillery run --dotenv ../.env first_test_scenario.yaml`
+# Run with `artillery run --dotenv ../.env challenge_user_by_token.yaml`
 #
 # Artillery can do a lot more! Check out the docs at:
 #
@@ -15,7 +15,7 @@ config:
       arrivalRate: 2
       rampTo: 4
       name: Ramp up load
-    - duration: 30
+    - duration: 20
       arrivalRate: 4
       name: Sustained load
   variables:
@@ -35,9 +35,9 @@ before:
           password: "{{ password }}"
 
 scenarios:
-  - name: "Authenticate a new user successfully"
-    weight: 98
+  - name: "Authenticate a new user successfully and get the user by token"
     flow:
+      - log: "Authenticate the new user {{ email }}"
       - post:
           url: "/auth"
           auth:
@@ -48,19 +48,23 @@ scenarios:
           capture:
             # Capture the token for future use
             - json: "$.token"
-              as: "token"
+              as: token
           expect:
             - statusCode: 201
-
-  - name: "Failed authentication via incorrect password for the new user"
-    weight: 2
-    flow: 
-      - post:
-          url: "/auth"
-          auth:
-            user: "{{ email }}"
-            pass: "password123"
+      - think: 5
+      - log: "Get the new user by token {{ token }} and check their email"
+      - get:
+          url: "/users/me"
           form:
-            access_token: "{{ master-key }}"
+            access_token: "{{ token }}"
+          capture:
+            # Capture the email for future use
+            - json: "$.email"
+              as: user-email
           expect:
-            - statusCode: 401
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: email
+            - equals:
+              - "{{ email }}"
+              - "{{ user-email }}"
